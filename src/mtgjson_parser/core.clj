@@ -1,7 +1,8 @@
 (ns mtgjson-parser.core
   (:require [cheshire.core :refer [parse-string]]
             [clojure.string :refer [join]])
-  (:import [java.io File]))
+  (:import [java.io File])
+  (:gen-class))
 
 (def input (-> (slurp "resources/AllSetsArray-x.json")
                (parse-string true)))
@@ -21,6 +22,11 @@
                  sort
                  distinct
                  (join "\n"))))))
+
+(defn -main [& args]
+  (println "Starting")
+  (create-card-names-per-block)
+  (println "Done"))
 
 ;{
 ; "LEA" : { /* set data */ },
