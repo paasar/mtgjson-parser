@@ -17,7 +17,7 @@
     (doseq [f (rest (file-seq (File. output-dir)))]
       (.delete f))
     (doseq [[n {:keys [code name cards]}] blocks-with-ordinal]
-      (spit (format "%s/%04d_%s_%s" output-dir n code name)
+      (spit (format "%s/%04d__%s__%s" output-dir n code name)
             (->> cards
                  (map (juxt :name :multiverseid))
                  (distinct-by first)

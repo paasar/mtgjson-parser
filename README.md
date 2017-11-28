@@ -2,7 +2,7 @@
 
 A Clojure program to parse data from [mtgjson.com file](https://mtgjson.com/json/AllSetsArray-x.json) and write each card name in a file per block.
 
-Output is list of files named like so `0214_XLN_Ixalan`. They are ordered by release date.
+Output is list of files named like so `0214__XLN__Ixalan`. They are ordered by release date.
 File content looks something like this:
 
     Adanto Vanguard;435152
