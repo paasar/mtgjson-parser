@@ -5,11 +5,11 @@ A Clojure program to parse data from [mtgjson.com file](https://mtgjson.com/json
 Output is list of files named like so `0214_XLN_Ixalan`. They are ordered by release date.
 File content looks something like this:
 
-    Adanto Vanguard
-    Adanto, the First Fort
-    Admiral Beckett Brass
-    Air Elemental
-    Ancient Brontodon
+    Adanto Vanguard;435152
+    Adanto, the First Fort;435174
+    Admiral Beckett Brass;435373
+    Air Elemental;435197
+    Ancient Brontodon;435330
     ...
 
 ## Usage

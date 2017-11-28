@@ -1,6 +1,7 @@
 (ns mtgjson-parser.core
   (:require [cheshire.core :refer [parse-string]]
-            [clojure.string :refer [join]])
+            [clojure.string :refer [join]]
+            [medley.core :refer [distinct-by]])
   (:import [java.io File])
   (:gen-class))
 
@@ -18,9 +19,10 @@
     (doseq [[n {:keys [code name cards]}] blocks-with-ordinal]
       (spit (format "%s/%04d_%s_%s" output-dir n code name)
             (->> cards
-                 (map :name)
-                 sort
-                 distinct
+                 (map (juxt :name :multiverseid))
+                 (distinct-by first)
+                 (sort-by first)
+                 (map #(join ";" %))
                  (join "\n"))))))
 
 (defn -main [& args]
