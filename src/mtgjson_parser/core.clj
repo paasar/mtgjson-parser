@@ -20,6 +20,7 @@
       (spit (format "%s/%04d__%s__%s" output-dir n code name)
             (->> cards
                  (map (juxt :name :multiverseid))
+                 (remove #(nil? (second %)))
                  (distinct-by first)
                  (sort-by first)
                  (map #(join ";" %))

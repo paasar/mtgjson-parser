@@ -12,6 +12,8 @@ File content looks something like this:
     Ancient Brontodon;435330
     ...
 
+*Notice!* Not all cards have multiverseId. They are just dropped out.
+
 ## Usage
 
     Download [input file](https://mtgjson.com/json/AllSetsArray-x.json) to `resources` directory.
