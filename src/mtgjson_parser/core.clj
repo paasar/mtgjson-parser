@@ -17,14 +17,15 @@
     (doseq [f (rest (file-seq (File. output-dir)))]
       (.delete f))
     (doseq [[n {:keys [code name cards]}] blocks-with-ordinal]
-      (spit (format "%s/%04d__%s__%s" output-dir n code name)
-            (->> cards
-                 (map (juxt :name :multiverseid))
-                 (remove #(nil? (second %)))
-                 (distinct-by first)
-                 (sort-by first)
-                 (map #(join ";" %))
-                 (join "\n"))))))
+      (let [content (->> cards
+                   (map (juxt :name :multiverseid))
+                   (remove #(nil? (second %)))
+                   (distinct-by first)
+                   (sort-by first)
+                   (map #(join ";" %))
+                   (join "\n"))]
+        (if (seq content)
+          (spit (format "%s/%04d__%s__%s" output-dir n code name) content))))))
 
 (defn -main [& args]
   (println "Starting")
