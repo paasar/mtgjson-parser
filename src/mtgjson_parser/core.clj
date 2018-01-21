@@ -5,8 +5,7 @@
   (:import [java.io File])
   (:gen-class))
 
-(def input (-> (slurp "resources/AllSetsArray-x.json")
-               (parse-string true)))
+(def input (parse-string (slurp "resources/AllSetsArray-x.json") true))
 
 (defn create-card-names-per-block []
   (let [ordinals (map inc (range))
@@ -18,13 +17,13 @@
       (.delete f))
     (doseq [[n {:keys [code name cards]}] blocks-with-ordinal]
       (let [content (->> cards
-                   (map (juxt :name :multiverseid))
-                   (remove #(nil? (second %)))
-                   (distinct-by first)
-                   (sort-by first)
-                   (map #(join ";" %))
-                   (join "\n"))]
-        (if (seq content)
+                         (map (juxt :name :multiverseid))
+                         (remove #(nil? (second %)))
+                         (distinct-by first)
+                         (sort-by first)
+                         (map #(join ";" %))
+                         (join "\n"))]
+        (when (seq content)
           (spit (format "%s/%04d__%s__%s" output-dir n code name) content))))))
 
 (defn -main [& args]
