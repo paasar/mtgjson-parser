@@ -5,19 +5,22 @@
   (:import [java.io File])
   (:gen-class))
 
-(def input (parse-string (slurp "resources/AllSetsArray-x.json") true))
+(def input (parse-string (slurp "resources/AllSets.json") true))
+
+(defn- ensure-empty-dir [output-dir]
+  (.mkdir (File. output-dir))
+    (doseq [f (rest (file-seq (File. output-dir)))]
+      (.delete f)))
 
 (defn create-card-names-per-block []
   (let [ordinals (map inc (range))
-        sorted-blocks (sort-by :releaseDate input)
+        sorted-blocks (sort-by :releaseDate (vals input))
         blocks-with-ordinal (map vector ordinals sorted-blocks)
         output-dir "./output"]
-    (.mkdir (File. output-dir))
-    (doseq [f (rest (file-seq (File. output-dir)))]
-      (.delete f))
+    (ensure-empty-dir output-dir)
     (doseq [[n {:keys [code name cards]}] blocks-with-ordinal]
       (let [content (->> cards
-                         (map (juxt :name :multiverseid))
+                         (map (juxt :name :multiverseId))
                          (remove #(nil? (second %)))
                          (distinct-by first)
                          (sort-by first)
